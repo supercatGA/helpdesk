@@ -195,6 +195,12 @@
   .cat-row .cat-emoji{width:52px;flex:none;text-align:center;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--bone);font-size:17px;outline:none}
   .cat-row .cat-name{flex:1;min-width:0;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--bone);font-family:var(--body);font-size:14px;outline:none}
   .cat-row input:focus{border-color:var(--dokkaebi)}
+  .gh.kbcat-edit{gap:8px;flex-wrap:wrap}
+  .kbcat-edit .kbcat-emoji{width:52px;flex:none;text-align:center;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--bone);font-size:17px;outline:none}
+  .kbcat-edit .kbcat-name{flex:1;min-width:120px;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:#fff;font-family:var(--display);font-weight:700;font-size:16px;outline:none}
+  .kbcat-edit .kbcat-emoji:focus,.kbcat-edit .kbcat-name:focus{border-color:var(--dokkaebi)}
+  .kbcat-edit .kbcat-save{flex:none;background:var(--dokkaebi);color:#06231d;font-weight:700;font-size:13px;padding:9px 14px;border-radius:9px}
+  .kbcat-edit .kbcat-save:active{transform:translateY(1px)}
   /* admin gate */
   .gate{display:flex;justify-content:center;padding:40px 0}
   .gate-card{width:100%;max-width:380px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:34px 26px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
@@ -435,6 +441,7 @@
           <div class="field"><label>슬랙 안내 URL (참고용)</label><input id="set_slack" class="m-q" placeholder="https://...slack.com/..."/></div>
           <div class="field"><label>어드민 접근코드 (백엔드 미설정 시 폴백)</label><input id="set_pin" class="m-q"/></div>
           <div class="field"><label>인증 서버 URL (백엔드 연동, 비우면 폴백 코드 사용)</label><input id="set_authurl" class="m-q" placeholder="https://your-backend/verify (POST {code} → {ok})"/></div>
+          <div class="field"><label>AI 프록시 URL (호야 실시간 AI, 비우면 등록 지식으로만 답변)</label><input id="set_aiproxy" class="m-q" placeholder="https://your-worker.workers.dev"/></div>
           <div class="guide-save" style="margin-top:4px"><button class="btn btn-primary" style="font-size:15px;padding:12px 26px" onclick="saveSettings()">설정 저장</button></div>
         </div>
       </div>
@@ -472,6 +479,10 @@ var ADMIN_PIN="supercat";
 // 설정 탭이나 여기에서 URL을 넣으면, 게이트가 클라이언트가 아닌 서버에서 코드를 검증합니다.
 var ADMIN_AUTH_URL="";
 var adminAuthed=false;
+// AI 프록시 URL — 호야의 실시간 생성형 AI를 외부(깃허브 등) 배포 사이트에서도 쓰려면
+// API 키를 숨긴 백엔드 프록시 주소를 넣으세요. 비우면 등록 지식 기반(오프라인 두뇌)으로만 답합니다.
+// 설정 탭에서도 넣을 수 있어요. 백엔드 코드/배포법은 함께 드린 ai-proxy-backend.md 참고.
+var AI_PROXY_URL="";
 // 슬랙 연결 링크 — 실제 채널/워크스페이스 URL로 교체하세요.
 var SLACK_URL="https://supercat.slack.com/";
 // 카테고리별 연결 링크(슬랙 등)를 추후 지정. 비우면 공통 SLACK_URL 사용.
@@ -500,7 +511,7 @@ function defaultRR(){return [
   {area:'근태문의',team:'인사팀',person:'담당자 미지정',resp:'연차, 반차, 재택근무, 초과근무, 휴직, 복직 안내'},
   {area:'기타문의',team:'경영지원팀',person:'오재훈',resp:'분류가 어려운 일반 문의 접수 및 담당자 연결'}
 ];}
-function defaultSettings(){return {email:HANDOFF_EMAIL,web3:WEB3FORMS_KEY,slack:SLACK_URL,pin:ADMIN_PIN,authUrl:ADMIN_AUTH_URL};}
+function defaultSettings(){return {email:HANDOFF_EMAIL,web3:WEB3FORMS_KEY,slack:SLACK_URL,pin:ADMIN_PIN,authUrl:ADMIN_AUTH_URL,aiProxy:AI_PROXY_URL};}
 var DB={data:null,load:function(){
   var c,g,i,a,r,s;
   try{c=JSON.parse(Store.get('hoya_cats'));}catch(e){}
@@ -521,7 +532,7 @@ var DB={data:null,load:function(){
   this.applySettings();
 },applySettings:function(){var st=this.data.settings||{};
   if(st.email)HANDOFF_EMAIL=st.email;if(st.web3)WEB3FORMS_KEY=st.web3;if(st.slack)SLACK_URL=st.slack;if(st.pin)ADMIN_PIN=st.pin;
-  ADMIN_AUTH_URL=st.authUrl||'';},
+  ADMIN_AUTH_URL=st.authUrl||'';AI_PROXY_URL=st.aiProxy||'';},
   saveCats:function(){Store.set('hoya_cats',JSON.stringify(this.data.cats));},
   saveGuide:function(){Store.set('hoya_guide',JSON.stringify(this.data.guide));},
   saveAsked:function(){Store.set('hoya_asked',JSON.stringify(this.data.asked));},
@@ -769,17 +780,25 @@ function classifyIdx(text){
 }
 function catByIdx(i){if(i<0||i>=CATEGORIES.length)return CATEGORIES[CATEGORIES.length-1];return CATEGORIES[i];}
 function classify(text){var i=classifyIdx(text);return i<0?CATEGORIES[CATEGORIES.length-1]:catByIdx(i);}
-function matchManual(text,q){
-  if(!q)return false;q=q.trim();if(!q)return false;
-  if(text.indexOf(q)>=0||q.indexOf(text)>=0)return true;
-  var toks=q.split(/[\s,.;:()\[\]\/·]+/).filter(function(t){return t.length>=2;});
-  if(!toks.length)return false;var hit=0;toks.forEach(function(t){if(text.indexOf(t)>=0)hit++;});
-  return hit/toks.length>=0.6;
+function matchScore(text,q){
+  if(!q)return 0;q=(q+'').trim();if(!q)return 0;
+  if(text.indexOf(q)>=0||q.indexOf(text)>=0)return 1;
+  var toks=q.split(/[\s,.;:?!~()\[\]\/·]+/).filter(function(t){return t.length>=2;});
+  if(!toks.length)return 0;
+  var hit=0,longHit=false;
+  toks.forEach(function(t){if(text.indexOf(t)>=0){hit++;if(t.length>=2)longHit=true;}});
+  var ratio=hit/toks.length;
+  // 핵심 단어가 하나라도 겹치면 비슷한 질문으로 간주(넓게 매칭)
+  if(longHit&&ratio<0.34)return 0.34;
+  return ratio;
 }
+function matchManual(text,q){return matchScore(text,q)>=0.34;}
 function demoBrain(text){
-  // 1) 등록된 예상질문/답변 우선
+  // 1) 등록된 예상질문/답변 중 '가장 비슷한' 것을 답변(넓게 매칭)
+  var best=null,bestSc=0;
   for(var ci=0;ci<CATEGORIES.length;ci++){var c=CATEGORIES[ci];var ms=(DB.data.guide[c]&&DB.data.guide[c].manuals)||[];
-    for(var mi=0;mi<ms.length;mi++){if(ms[mi].q&&ms[mi].a&&matchManual(text,ms[mi].q))return {category:c,reply:ms[mi].a,escalate:false};}}
+    for(var mi=0;mi<ms.length;mi++){if(ms[mi].q&&ms[mi].a){var sc=matchScore(text,ms[mi].q);if(sc>bestSc){bestSc=sc;best={category:c,reply:ms[mi].a};}}}}
+  if(best&&bestSc>=0.34)return {category:best.category,reply:best.reply,escalate:false};
   // 2) 분류 실패 = 모름 → 즉시 모른다고 답하고 담당자 연결
   var idx=classifyIdx(text);
   if(idx<0) return {category:catByIdx(-1),reply:'그건 제가 정확히 모르겠어요. 담당자에게 연결해 드릴게요.',escalate:true};
@@ -791,21 +810,34 @@ function demoBrain(text){
   return {category:cat,reply:txt,escalate:escalate};}
 async function callAI(text){
   history.push({role:'user',content:text});
-  var res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:400,system:buildSystem(),messages:history})});
-  if(!res.ok) throw new Error("api "+res.status);
-  var data=await res.json();
-  var raw=(data.content||[]).map(function(b){return b.type==='text'?b.text:'';}).join('').trim();
-  var clean=raw.replace(/```json|```/g,'').trim();
-  var parsed;try{parsed=JSON.parse(clean);}catch(e){parsed={category:'기타문의',reply:clean||'다시 한 번 말씀해 주시겠어요?',escalate:false};}
-  history.push({role:'assistant',content:clean});return parsed;
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var to=ctrl?setTimeout(function(){ctrl.abort();},AI_PROXY_URL?20000:6000):null;
+  try{
+    var opt={method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:400,system:buildSystem(),messages:history})};
+    if(ctrl)opt.signal=ctrl.signal;
+    var res=await fetch(AI_PROXY_URL||"https://api.anthropic.com/v1/messages",opt);
+    if(to)clearTimeout(to);
+    if(!res.ok) throw new Error("api "+res.status);
+    var data=await res.json();
+    var raw=(data.content||[]).map(function(b){return b.type==='text'?b.text:'';}).join('').trim();
+    var clean=raw.replace(/```json|```/g,'').trim();
+    var parsed;try{parsed=JSON.parse(clean);}catch(e){parsed={category:CATEGORIES[CATEGORIES.length-1],reply:clean||'다시 한 번 말씀해 주시겠어요?',escalate:false};}
+    history.push({role:'assistant',content:clean});return parsed;
+  }catch(e){if(to)clearTimeout(to);throw e;}
 }
-var busy=false;
+var busy=false,aiDown=false;
 async function sendMsg(preset){
-  var inp=document.getElementById('input'),text=(preset||inp.value).trim();
-  if(!text||busy)return;busy=true;inp.value='';lastUserMsg=text;addUser(text);showTyping();
-  var data;try{data=await callAI(text);}catch(e){data=demoBrain(text);history.push({role:'assistant',content:JSON.stringify(data)});}
-  hideTyping();addBot(data);logAsked(text,data.category,data.reply);busy=false;inp.focus();
+  var inp=document.getElementById('input'),text=(preset||(inp?inp.value:'')||'').trim();
+  if(!text||busy)return;busy=true;if(inp)inp.value='';lastUserMsg=text;addUser(text);showTyping();
+  var data;
+  try{
+    if(aiDown&&!AI_PROXY_URL){data=demoBrain(text);}
+    else{try{data=await callAI(text);}catch(e){if(!AI_PROXY_URL)aiDown=true;data=demoBrain(text);}}
+  }catch(e){data={category:CATEGORIES[CATEGORIES.length-1]||'기타문의',reply:'잠시 문제가 있었어요. 한 번만 다시 물어봐 주실래요?',escalate:false};}
+  hideTyping();
+  try{addBot(data);logAsked(text,data.category,data.reply);}catch(e){}
+  busy=false;if(inp)inp.focus();
 }
 document.getElementById('input').addEventListener('keydown',function(e){if(e.key==='Enter')sendMsg();});
 var QUICK=['연차 신청 어떻게 해요?','회의실 예약하고 싶어요','노트북 반납하려면?','경조사 지원 알려줘','워크숍 공간 대관'];
@@ -899,11 +931,39 @@ function renderKBCat(){
   var c=currentKBCat,gd=DB.data.guide[c]||{text:'',manuals:[]};
   var rows=(gd.manuals||[]).map(function(m){return manualRow(m.q,m.a);}).join('');
   document.getElementById('kbEditor').innerHTML=
-    '<div class="guide-item" data-cat="'+c+'"><div class="gh"><span>'+CAT_EMOJI[c]+'</span><b>'+c+'</b><span class="pill">호야 기본 안내</span></div>'
+    '<div class="guide-item" data-cat="'+c+'"><div class="gh kbcat-edit">'
+    +'<input class="kbcat-emoji" maxlength="3" value="'+esc(CAT_EMOJI[c]||'')+'" title="이모지"/>'
+    +'<input class="kbcat-name" value="'+esc(c)+'" data-old="'+esc(c)+'" placeholder="카테고리명"/>'
+    +'<button class="kbcat-save" onclick="renameCurrentCat()">이름 변경</button>'
+    +'<span class="pill">호야 기본 안내</span></div>'
     +'<textarea class="g-text" placeholder="이 카테고리의 기본 안내 문구를 적어주세요.">'+esc(gd.text||'')+'</textarea>'
     +'<div class="m-label">예상질문/답변 <small>(질문이 비슷하면 호야가 이 답변을 그대로 사용해요, 무제한 추가 가능)</small></div>'
     +'<div class="manuals">'+rows+'</div>'
     +'<button class="add-manual" onclick="addManual(this)">+ 예상질문 추가</button></div>';
+}
+function renameCurrentCat(){
+  captureKB(); // 현재 편집 중인 안내문/예상질문을 먼저 기존 키에 저장
+  var ed=document.getElementById('kbEditor');
+  var newName=ed.querySelector('.kbcat-name').value.trim();
+  var newEmoji=ed.querySelector('.kbcat-emoji').value.trim()||'🏷️';
+  var old=currentKBCat;
+  if(!newName){toast('카테고리명을 입력해 주세요');return;}
+  if(newName!==old){for(var k=0;k<CATEGORIES.length;k++){if(CATEGORIES[k]===newName){toast('이미 있는 카테고리명이에요');return;}}}
+  // cats 배열 갱신
+  var idx=-1;for(var i=0;i<DB.data.cats.length;i++){if(DB.data.cats[i].name===old){idx=i;break;}}
+  if(idx<0)idx=CATEGORIES.indexOf(old);
+  if(idx<0){toast('카테고리를 찾지 못했어요');return;}
+  DB.data.cats[idx]={name:newName,emoji:newEmoji};
+  if(newName!==old){
+    DB.data.guide[newName]=DB.data.guide[old]||{text:'',manuals:[]};
+    if(old in DB.data.guide)delete DB.data.guide[old];
+    DB.data.asked.forEach(function(q){if(q.cat===old)q.cat=newName;});
+  }
+  rebuildCats();currentKBCat=newName;
+  DB.saveCats();DB.saveGuide();DB.saveAsked();
+  renderKBTabs();renderKBCat();renderCaptured();updateHeroCats();
+  if(document.getElementById('catList'))renderCatMgr();
+  toast(newName!==old?('"'+newName+'"(으)로 변경했어요. 사이트 전체에 반영됐어요 🏮'):'이모지를 저장했어요 🏮');
 }
 function captureKB(){
   var item=document.querySelector('#kbEditor .guide-item');if(!item)return;
@@ -955,9 +1015,10 @@ function renderSettings(){var s=DB.data.settings||{};
   document.getElementById('set_slack').value=s.slack||'';
   document.getElementById('set_pin').value=s.pin||'';
   document.getElementById('set_authurl').value=s.authUrl||'';
+  document.getElementById('set_aiproxy').value=s.aiProxy||'';
 }
 function saveSettings(){
-  DB.data.settings={email:val('set_email')||HANDOFF_EMAIL,web3:val('set_w3f'),slack:val('set_slack'),pin:val('set_pin')||ADMIN_PIN,authUrl:val('set_authurl')};
+  DB.data.settings={email:val('set_email')||HANDOFF_EMAIL,web3:val('set_w3f'),slack:val('set_slack'),pin:val('set_pin')||ADMIN_PIN,authUrl:val('set_authurl'),aiProxy:val('set_aiproxy')};
   DB.saveSettings();toast('설정을 저장했어요 🏮');
 }
 
