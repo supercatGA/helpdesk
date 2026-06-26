@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>슈퍼캣 — 헬프데스크</title>
-<meta name="description" content="자산관리·비품·시설·복리후생 등 사내 헬프데스크 문의를 슈퍼캣 '호야'가 1차 응대하고 담당자에게 연결합니다." />
+<meta name="description" content="자산관리, 비품, 시설, 복리후생 등 사내 헬프데스크 문의를 슈퍼캣 '호야'가 1차 응대하고 담당자에게 연결합니다." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
@@ -73,11 +73,11 @@
   .sub{max-width:600px;margin:16px auto 0;color:#D8D2E8;font-size:15.5px;text-shadow:0 1px 10px rgba(0,0,0,.6)}
   .sub .cats{color:#fff;font-weight:500;display:block;margin-bottom:5px;font-size:14px;letter-spacing:.2px}
 
-  .cta-main{margin:30px 0 14px}
-  .cta-row2{display:flex;flex-wrap:wrap;gap:11px;justify-content:center}
-  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-weight:700;font-size:14.5px;transition:transform .12s, box-shadow .12s;border:2px solid transparent}
+  .cta-main{margin:36px 0 18px}
+  .cta-row2{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:11px;padding:17px 29px;border-radius:15px;font-weight:700;font-size:18px;transition:transform .12s, box-shadow .12s;border:2px solid transparent}
   .btn:active{transform:translateY(2px)}
-  .btn-primary{background:var(--dokkaebi);color:#06231d;box-shadow:0 5px 0 var(--dokkaebi-d);font-family:var(--display);font-size:19px;padding:15px 34px}
+  .btn-primary{background:var(--dokkaebi);color:#06231d;box-shadow:0 6px 0 var(--dokkaebi-d);font-family:var(--display);font-size:25px;padding:20px 46px}
   .btn-primary:hover{box-shadow:0 5px 0 var(--dokkaebi-d),0 0 32px rgba(63,230,203,.6)}
   .btn-primary:active{box-shadow:0 2px 0 var(--dokkaebi-d)}
   .btn-ghost{background:rgba(28,23,54,.82);color:var(--bone);border-color:var(--line);box-shadow:0 5px 0 #0a0816}
@@ -191,6 +191,10 @@
   .m-del:hover{background:#3a1c18;color:var(--vermilion)}
   .add-manual{margin-top:4px;background:var(--night);border:1px dashed var(--line);color:var(--dokkaebi);padding:10px 14px;border-radius:10px;font-size:13.5px;font-weight:700;width:100%}
   .add-manual:hover{border-color:var(--dokkaebi);background:#13261f}
+  .cat-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px}
+  .cat-row .cat-emoji{width:52px;flex:none;text-align:center;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--bone);font-size:17px;outline:none}
+  .cat-row .cat-name{flex:1;min-width:0;background:var(--night);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--bone);font-family:var(--body);font-size:14px;outline:none}
+  .cat-row input:focus{border-color:var(--dokkaebi)}
   /* admin gate */
   .gate{display:flex;justify-content:center;padding:40px 0}
   .gate-card{width:100%;max-width:380px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:34px 26px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
@@ -317,7 +321,7 @@
       <div class="eyebrow">SUPERCAT HELPDESK</div>
       <h1 class="head">헬프데스크 <span class="pop">문의</span></h1>
       <p class="sub">
-        <span class="cats">자산관리 · 비품 · 시설관리 · 복리후생 · 공간/행사 · 근태문의 · 기타문의</span>
+        <span class="cats" id="heroCats">자산관리 | 비품 | 시설관리 | 복리후생 | 공간/행사 | 근태문의 | 기타문의</span>
         호야가 먼저 답하고, 어려운 건 담당자에게 바로 연결해요.
       </p>
       <div class="cta-main"><button class="btn btn-primary" onclick="go('chat')">▶ 호야와 대화하기</button></div>
@@ -346,11 +350,11 @@
         <button class="send" onclick="sendMsg()" aria-label="보내기"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-2-6-8-2z" fill="currentColor"/></svg></button>
       </div>
     </div></div>
-    <p class="chat-note">호야가 실시간으로 답해요 · 어려운 문의엔 <b>담당자 메일 연결</b> 버튼이 떠요</p>
+    <p class="chat-note">호야가 실시간으로 답해요 — 어려운 문의엔 <b>담당자 메일 연결</b> 버튼이 떠요</p>
   </div></div>
 </section>
 
-<!-- ADMIN CONSOLE (별도 페이지 · #admin 으로만 접근) -->
+<!-- ADMIN CONSOLE (별도 페이지 — #admin 으로만 접근) -->
 <section id="view-admin" class="view">
   <div class="adminbar"><div class="wrap">
     <div class="ab-brand">🛡️ SUPERCAT <b>어드민 콘솔</b></div>
@@ -366,7 +370,7 @@
       <div class="gate-card">
         <div class="gate-ic">🔒</div>
         <b>어드민 전용</b>
-        <p>사이트 운영·지식 관리 콘솔입니다. 접근코드를 입력해 주세요.</p>
+        <p>사이트 운영 및 지식 관리 콘솔입니다. 접근코드를 입력해 주세요.</p>
         <input id="adminPin" type="password" placeholder="접근코드" onkeydown="if(event.key==='Enter')checkPin()"/>
         <button class="btn btn-primary" style="width:100%;font-size:16px" onclick="checkPin()">입장하기</button>
         <span class="gate-hint">인증 서버(설정 탭)가 연결되면 <b>서버에서 코드를 검증</b>해요. 미연결 시 폴백 코드(기본 <b>supercat</b>)를 사용합니다.</span>
@@ -375,7 +379,7 @@
 
     <div id="adminContent" style="display:none">
     <h2>사이트 관리</h2>
-    <p class="lead">호야 헬프데스크의 문의·지식·담당자·설정을 한 곳에서 관리해요.</p>
+    <p class="lead">호야 헬프데스크의 문의, 지식, 담당자, 설정을 한 곳에서 관리해요.</p>
     <div class="tabs">
       <button class="tab on" data-atab="inq" onclick="adminTab('inq')">📋 문의 현황</button>
       <button class="tab" data-atab="kb" onclick="adminTab('kb')">🧠 호야 지식관리</button>
@@ -396,11 +400,17 @@
 
     <div class="atab" id="atab-kb">
       <div class="kb-section">
+        <h3>🏷️ 카테고리 관리 <small>이름과 이모지를 바꾸면 추천 팝업, 지식, 분류 등 사이트 전체에 반영돼요.</small></h3>
+        <div id="catList"></div>
+        <button class="add-manual" onclick="catAdd()">+ 카테고리 추가</button>
+        <div class="guide-save"><button class="btn btn-primary" style="font-size:15px;padding:12px 26px" onclick="saveCats()">카테고리 저장</button></div>
+      </div>
+      <div class="kb-section">
         <h3>📥 수집된 질문 <small>호야와의 대화에서 들어온 질문이 모여요. 좋은 질문은 해당 카테고리 지식으로 등록하세요.</small></h3>
         <div class="board"><div id="capturedList"></div></div>
       </div>
       <div class="kb-section">
-        <h3>🧩 예상질문 · 답변 (지식베이스) <small>카테고리를 선택해 해당 카테고리만 편집해요. 질문이 비슷하면 호야가 등록한 답변을 그대로 사용해요.</small></h3>
+        <h3>🧩 예상질문/답변 (지식베이스) <small>카테고리를 선택해 해당 카테고리만 편집해요. 질문이 비슷하면 호야가 등록한 답변을 그대로 사용해요.</small></h3>
         <div class="subtabs" id="kbTabs"></div>
         <div id="kbEditor"></div>
         <div class="guide-save"><button class="btn btn-primary" style="font-size:15px;padding:12px 26px" onclick="saveGuide()">지식 저장</button></div>
@@ -409,7 +419,7 @@
 
     <div class="atab" id="atab-rr">
       <div class="kb-section">
-        <h3>👥 담당자 안내 <small>'담당자 안내' 팝업에 노출되는 담당 영역·팀·담당자·역할을 관리해요.</small></h3>
+        <h3>👥 담당자 안내 <small>'담당자 안내' 팝업에 노출되는 담당 영역, 팀, 담당자, 역할을 관리해요.</small></h3>
         <div id="rrList"></div>
         <button class="add-manual" onclick="rrAdd()">+ 담당 항목 추가</button>
         <div class="guide-save"><button class="btn btn-primary" style="font-size:15px;padding:12px 26px" onclick="saveRR()">담당자 안내 저장</button></div>
@@ -418,13 +428,13 @@
 
     <div class="atab" id="atab-set">
       <div class="kb-section">
-        <h3>⚙️ 사이트 설정 <small>연결·발송에 사용하는 값과 어드민 접근코드를 관리해요.</small></h3>
+        <h3>⚙️ 사이트 설정 <small>연결과 발송에 사용하는 값과 어드민 접근코드를 관리해요.</small></h3>
         <div class="guide-item">
           <div class="field"><label>담당자 메일 (문의 폼 자동 발송 수신)</label><input id="set_email" class="m-q"/></div>
           <div class="field"><label>Web3Forms Access Key (문의 자동 발송)</label><input id="set_w3f" class="m-q" placeholder="web3forms.com 발급 키"/></div>
           <div class="field"><label>슬랙 안내 URL (참고용)</label><input id="set_slack" class="m-q" placeholder="https://...slack.com/..."/></div>
           <div class="field"><label>어드민 접근코드 (백엔드 미설정 시 폴백)</label><input id="set_pin" class="m-q"/></div>
-          <div class="field"><label>인증 서버 URL (백엔드 연동 · 비우면 폴백 코드 사용)</label><input id="set_authurl" class="m-q" placeholder="https://your-backend/verify (POST {code} → {ok})"/></div>
+          <div class="field"><label>인증 서버 URL (백엔드 연동, 비우면 폴백 코드 사용)</label><input id="set_authurl" class="m-q" placeholder="https://your-backend/verify (POST {code} → {ok})"/></div>
           <div class="guide-save" style="margin-top:4px"><button class="btn btn-primary" style="font-size:15px;padding:12px 26px" onclick="saveSettings()">설정 저장</button></div>
         </div>
       </div>
@@ -446,8 +456,10 @@
 var CHAR_IMG = "data:image/png;base64,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";
 ['navImg','heroImg','chatImg'].forEach(function(id){document.getElementById(id).src=CHAR_IMG;});
 
-var CATEGORIES=['자산관리','비품','시설관리','복리후생','공간/행사','근태문의','기타문의'];
-var CAT_EMOJI={'자산관리':'💻','비품':'📦','시설관리':'🛠️','복리후생':'🎁','공간/행사':'🎏','근태문의':'🗓️','기타문의':'❓'};
+var DEFAULT_CATS=[{name:'자산관리',emoji:'💻'},{name:'비품',emoji:'📦'},{name:'시설관리',emoji:'🛠️'},{name:'복리후생',emoji:'🎁'},{name:'공간/행사',emoji:'🎏'},{name:'근태문의',emoji:'🗓️'},{name:'기타문의',emoji:'❓'}];
+var CATEGORIES=DEFAULT_CATS.map(function(c){return c.name;});
+var CAT_EMOJI={};DEFAULT_CATS.forEach(function(c){CAT_EMOJI[c.name]=c.emoji;});
+function rebuildCats(){CATEGORIES=DB.data.cats.map(function(c){return c.name;});CAT_EMOJI={};DB.data.cats.forEach(function(c){CAT_EMOJI[c.name]=c.emoji||'🏷️';});}
 
 /* ============ CONFIG ============ */
 var HANDOFF_EMAIL="jaehoon.oh@supercat.co.kr";
@@ -471,41 +483,46 @@ var Store=(function(){var mem={};
           set:function(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}};
 })();
 function defaultGuide(){return {
-  '자산관리':{text:'노트북·모니터 등 회사 자산은 [자산관리] 시스템에서 지급/반납을 신청해요. 분실·파손은 즉시 총무팀에 알려주세요. 자산 실사는 분기 1회 진행됩니다.',manuals:[]},
-  '비품':{text:'문구·소모품 등 사무 비품은 [비품 신청]에서 신청하면 2~3일 내 지급돼요. 대량/고가 비품은 팀장 승인이 필요합니다.',manuals:[]},
-  '시설관리':{text:'회의실 예약은 [공간 예약]에서 30분 단위로 가능해요. 설비 고장(에어컨·조명 등)은 [시설 신고]로 접수하면 총무팀이 처리합니다.',manuals:[]},
-  '복리후생':{text:'경조사 지원·건강검진·복지포인트는 [복리후생]에서 신청해요. 경조사비는 증빙 제출 후 3영업일 내 지급됩니다.',manuals:[]},
-  '공간/행사':{text:'사내 행사·워크숍 공간 대관과 다과 지원은 [공간/행사]에서 신청해요. 인원과 일정을 함께 알려주세요.',manuals:[]},
-  '근태문의':{text:'연차·반차·재택근무는 [근태] 시스템에서 신청해요. 초과근무는 사전 승인 후 인정되며, 휴직·복직은 인사팀과 협의가 필요합니다.',manuals:[]},
+  '자산관리':{text:'노트북, 모니터 등 회사 자산은 [자산관리] 시스템에서 지급/반납을 신청해요. 분실, 파손은 즉시 총무팀에 알려주세요. 자산 실사는 분기 1회 진행됩니다.',manuals:[]},
+  '비품':{text:'문구, 소모품 등 사무 비품은 [비품 신청]에서 신청하면 2~3일 내 지급돼요. 대량/고가 비품은 팀장 승인이 필요합니다.',manuals:[]},
+  '시설관리':{text:'회의실 예약은 [공간 예약]에서 30분 단위로 가능해요. 설비 고장(에어컨, 조명 등)은 [시설 신고]로 접수하면 총무팀이 처리합니다.',manuals:[]},
+  '복리후생':{text:'경조사 지원, 건강검진, 복지포인트는 [복리후생]에서 신청해요. 경조사비는 증빙 제출 후 3영업일 내 지급됩니다.',manuals:[]},
+  '공간/행사':{text:'사내 행사, 워크숍 공간 대관과 다과 지원은 [공간/행사]에서 신청해요. 인원과 일정을 함께 알려주세요.',manuals:[]},
+  '근태문의':{text:'연차, 반차, 재택근무는 [근태] 시스템에서 신청해요. 초과근무는 사전 승인 후 인정되며, 휴직, 복직은 인사팀과 협의가 필요합니다.',manuals:[]},
   '기타문의':{text:'어떤 도움이 필요한지 편하게 알려주세요. 적합한 담당자에게 빠르게 연결해 드릴게요.',manuals:[]}
 };}
 function defaultRR(){return [
-  {area:'자산관리',team:'총무팀',person:'담당자 미지정',resp:'노트북·모니터 등 회사 자산의 지급·반납·실사, 분실·파손 처리'},
-  {area:'비품',team:'총무팀',person:'담당자 미지정',resp:'문구·소모품 등 사무 비품 신청 및 지급'},
-  {area:'시설관리',team:'총무팀',person:'담당자 미지정',resp:'회의실 예약, 설비 고장(에어컨·조명 등) 접수 및 수리'},
+  {area:'자산관리',team:'총무팀',person:'담당자 미지정',resp:'노트북, 모니터 등 회사 자산의 지급, 반납, 실사, 분실, 파손 처리'},
+  {area:'비품',team:'총무팀',person:'담당자 미지정',resp:'문구, 소모품 등 사무 비품 신청 및 지급'},
+  {area:'시설관리',team:'총무팀',person:'담당자 미지정',resp:'회의실 예약, 설비 고장(에어컨, 조명 등) 접수 및 수리'},
   {area:'복리후생',team:'인사팀',person:'담당자 미지정',resp:'경조사 지원, 건강검진, 복지포인트, 동호회 운영'},
-  {area:'공간/행사',team:'총무팀',person:'담당자 미지정',resp:'사내 행사·워크숍 공간 대관 및 다과 지원'},
-  {area:'근태문의',team:'인사팀',person:'담당자 미지정',resp:'연차·반차·재택근무, 초과근무, 휴직·복직 안내'},
+  {area:'공간/행사',team:'총무팀',person:'담당자 미지정',resp:'사내 행사, 워크숍 공간 대관 및 다과 지원'},
+  {area:'근태문의',team:'인사팀',person:'담당자 미지정',resp:'연차, 반차, 재택근무, 초과근무, 휴직, 복직 안내'},
   {area:'기타문의',team:'경영지원팀',person:'오재훈',resp:'분류가 어려운 일반 문의 접수 및 담당자 연결'}
 ];}
 function defaultSettings(){return {email:HANDOFF_EMAIL,web3:WEB3FORMS_KEY,slack:SLACK_URL,pin:ADMIN_PIN,authUrl:ADMIN_AUTH_URL};}
 var DB={data:null,load:function(){
-  var g,i,a,r,s;
+  var c,g,i,a,r,s;
+  try{c=JSON.parse(Store.get('hoya_cats'));}catch(e){}
   try{g=JSON.parse(Store.get('hoya_guide'));}catch(e){}try{i=JSON.parse(Store.get('hoya_inq'));}catch(e){}
   try{a=JSON.parse(Store.get('hoya_asked'));}catch(e){}try{r=JSON.parse(Store.get('hoya_rr'));}catch(e){}
   try{s=JSON.parse(Store.get('hoya_set'));}catch(e){}
+  this.data={};
+  this.data.cats=(Array.isArray(c)&&c.length)?c:DEFAULT_CATS.map(function(x){return {name:x.name,emoji:x.emoji};});
+  rebuildCats();
   var d=defaultGuide();
   if(g){CATEGORIES.forEach(function(c){
-    if(!g[c])g[c]=d[c];
+    if(!g[c])g[c]=(d[c]||{text:'',manuals:[]});
     else if(typeof g[c]==='string')g[c]={text:g[c],manuals:[]};
     else{if(g[c].text==null)g[c].text=(d[c]?d[c].text:'');if(!Array.isArray(g[c].manuals))g[c].manuals=[];}
   });}else g=d;
-  this.data={guide:g,inquiries:Array.isArray(i)?i:[],asked:Array.isArray(a)?a:[],
-    rr:Array.isArray(r)&&r.length?r:defaultRR(),settings:s||defaultSettings()};
+  this.data.guide=g;this.data.inquiries=Array.isArray(i)?i:[];this.data.asked=Array.isArray(a)?a:[];
+  this.data.rr=Array.isArray(r)&&r.length?r:defaultRR();this.data.settings=s||defaultSettings();
   this.applySettings();
 },applySettings:function(){var st=this.data.settings||{};
   if(st.email)HANDOFF_EMAIL=st.email;if(st.web3)WEB3FORMS_KEY=st.web3;if(st.slack)SLACK_URL=st.slack;if(st.pin)ADMIN_PIN=st.pin;
   ADMIN_AUTH_URL=st.authUrl||'';},
+  saveCats:function(){Store.set('hoya_cats',JSON.stringify(this.data.cats));},
   saveGuide:function(){Store.set('hoya_guide',JSON.stringify(this.data.guide));},
   saveAsked:function(){Store.set('hoya_asked',JSON.stringify(this.data.asked));},
   saveRR:function(){Store.set('hoya_rr',JSON.stringify(this.data.rr));},
@@ -632,11 +649,11 @@ function catOptions(sel){return CATEGORIES.map(function(c){return '<option'+(c==
 function rrModal(){
   var cards=(DB.data.rr||[]).map(function(r){
     return '<div class="rr-card"><div class="rh"><b>'+esc(r.area)+'</b>'+(r.team?'<span class="team">'+esc(r.team)+'</span>':'')+'</div>'
-      +(r.person?'<div class="who">담당자 · '+esc(r.person)+'</div>':'')
+      +(r.person?'<div class="who">담당자 '+esc(r.person)+'</div>':'')
       +'<div class="resp">'+esc(r.resp||'')+'</div></div>';
   }).join('');
   return modalHead('👥','담당자 안내')+'<div class="modal-body">'
-    +'<p class="desc">어떤 문의를 어느 팀·담당자가 맡는지 안내해요. 바로 도움이 필요하면 호야와 대화하거나 문의를 남겨주세요.</p>'
+    +'<p class="desc">어떤 문의를 어느 팀과 담당자가 맡는지 안내해요. 바로 도움이 필요하면 호야와 대화하거나 문의를 남겨주세요.</p>'
     +cards
     +'<div style="display:flex;gap:8px;margin-top:6px"><button class="mbtn mbtn-primary" style="flex:1" onclick="closeModal();go(\'chat\')">호야와 대화</button>'
     +'<button class="mbtn" style="flex:1;background:var(--panel);border:1px solid var(--line);color:var(--bone)" onclick="closeModal();openModal(\'inquiry\')">문의하기</button></div></div>';
@@ -657,7 +674,7 @@ function pickCategory(cat){
 /* --- 문의하기 (폼 → 메일) --- */
 function inquiryModal(opt){
   return modalHead('✏️','문의하기')+'<div class="modal-body" id="mbody">'
-    +'<p class="desc">소속·성함과 제목, 문의사항을 남기고 접수하면, 로그인 없이 담당자('+HANDOFF_EMAIL+')에게 바로 메일이 발송돼요.</p>'
+    +'<p class="desc">소속과 성함, 제목, 문의사항을 남기고 접수하면, 로그인 없이 담당자('+HANDOFF_EMAIL+')에게 바로 메일이 발송돼요.</p>'
     +'<div class="row2"><div class="field"><label>소속 <span class="req">*</span></label><input id="iq_dept" placeholder="예: 개발팀"/></div>'
     +'<div class="field"><label>성함 <span class="req">*</span></label><input id="iq_name" placeholder="예: 홍길동"/></div></div>'
     +'<div class="field"><label>카테고리</label><select id="iq_cat">'+catOptions(opt&&opt.cat)+'</select></div>'
@@ -702,10 +719,13 @@ function val(id){var el=document.getElementById(id);return el?el.value.trim():''
 /* ============ CHAT ============ */
 function baseSystem(){
   return "당신은 게임 스튜디오 '슈퍼캣(SuperCat)'의 사내 헬프데스크 AI '호야'입니다.\n"
-  +"한국 전통 설화 분위기의 친근한 캐릭터로, 직원의 헬프데스크 문의에 1차로 친근하고 정확하게 응대합니다. 가끔만 '뚝딱' 같은 따뜻한 말투를 가볍게 섞되 과하지 않게.\n"
+  +"친근하고 간결한 캐릭터로, 직원의 헬프데스크 문의에 1차로 응대합니다.\n"
   +"다룰 카테고리: "+CATEGORIES.join(', ')+".\n"
-  +"규칙:\n- 항상 한국어로 답합니다.\n- 아래 [참고 가이드]의 내용을 우선 근거로 안내합니다.\n- 데모 환경이므로 실제 기밀·개인정보·연락처는 지어내지 않습니다.\n- 답변은 핵심만 3~6문장 이내로.\n"
-  +"- 규정 예외 승인, 금액/조건 협상, 법적 판단, 민감한 인사·급여 문제처럼 사람이 판단해야 하는 건 escalate를 true로 하고 담당자 연결을 제안합니다.\n";
+  +"규칙:\n- 항상 한국어로, 답변은 1~3문장으로 짧고 명확하게. 군더더기와 인사말 반복 금지.\n"
+  +"- 아래 [참고 가이드]와 [자주 묻는 질문]에 근거가 있으면 그 내용으로 바로 답합니다.\n"
+  +"- 근거가 없거나 확실하지 않으면 추측하지 말고 즉시 '그건 제가 정확히 모르겠어요'라고 짧게 말한 뒤 담당자 연결을 제안하고 escalate를 true로 합니다.\n"
+  +"- 데모 환경이라 실제 기밀, 개인정보, 연락처는 지어내지 않습니다.\n"
+  +"- 규정 예외 승인, 금액/조건 협상, 법적 판단, 민감한 인사/급여 문제도 escalate를 true로 합니다.\n";
 }
 function buildSystem(){
   var lines=[],faqs=[];
@@ -714,7 +734,7 @@ function buildSystem(){
     (gd.manuals||[]).forEach(function(m){if(m.q&&m.a)faqs.push('· ['+c+'] Q:'+m.q+' → A:'+(m.a+'').replace(/\n/g,' '));});
   });
   var faqBlock=faqs.length?('\n\n[자주 묻는 질문 — 우선 적용] 사용자 질문이 아래 Q와 의미상 비슷하면 해당 A를 그대로 답변하세요.\n'+faqs.join('\n')):'';
-  return baseSystem()+'\n[참고 가이드]\n'+lines.join('\n')+faqBlock+'\n\n반드시 아래 JSON 한 줄로만 답하세요. 코드블록·설명 금지:\n{"category":"'+CATEGORIES.join('|')+'","reply":"답변","escalate":false}';
+  return baseSystem()+'\n[참고 가이드]\n'+lines.join('\n')+faqBlock+'\n\n반드시 아래 JSON 한 줄로만 답하세요. 코드블록과 설명 금지:\n{"category":"'+CATEGORIES.join('|')+'","reply":"답변","escalate":false}';
 }
 var history=[],lastUserMsg="";
 function bubbleEl(role){var m=document.createElement('div');m.className='msg '+role;return m;}
@@ -737,16 +757,18 @@ function handoffHref(category,lastMsg){
   var body='안녕하세요, 슈퍼캣 헬프데스크 담당자님.\n\n아래 문의에 대해 담당자 연결을 요청드립니다.\n\n■ 분류: '+category+'\n■ 문의 내용:\n'+(lastMsg||'(내용 없음)')+'\n\n— 슈퍼캣 헬프데스크 데모에서 생성된 메일입니다.';
   return 'mailto:'+HANDOFF_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
 }
-function classify(text){
+function classifyIdx(text){
   function has(){for(var i=0;i<arguments.length;i++){if(text.indexOf(arguments[i])>=0)return true;}return false;}
-  if(has('연차','휴가','반차','재택','출퇴근','지각','근태','초과근무','휴직','복직','출장'))return '근태문의';
-  if(has('회의실','예약','에어컨','조명','형광등','고장','수리','청소','주차','시설'))return '시설관리';
-  if(has('복지','복리','경조사','검진','복지포인트','동호회','경조'))return '복리후생';
-  if(has('행사','워크숍','회식','대관','다과','이벤트','파티','공간'))return '공간/행사';
-  if(has('자산','반납','실사','불출','노트북','모니터','장비'))return '자산관리';
-  if(has('비품','문구','소모품','볼펜','포스트잇','용품'))return '비품';
-  return '기타문의';
+  if(has('연차','휴가','반차','재택','출퇴근','지각','근태','초과근무','휴직','복직','출장'))return 5;
+  if(has('회의실','예약','에어컨','조명','형광등','고장','수리','청소','주차','시설'))return 2;
+  if(has('복지','복리','경조사','검진','복지포인트','동호회','경조'))return 3;
+  if(has('행사','워크숍','회식','대관','다과','이벤트','파티','공간'))return 4;
+  if(has('자산','반납','실사','불출','노트북','모니터','장비'))return 0;
+  if(has('비품','문구','소모품','볼펜','포스트잇','용품'))return 1;
+  return -1;
 }
+function catByIdx(i){if(i<0||i>=CATEGORIES.length)return CATEGORIES[CATEGORIES.length-1];return CATEGORIES[i];}
+function classify(text){var i=classifyIdx(text);return i<0?CATEGORIES[CATEGORIES.length-1]:catByIdx(i);}
 function matchManual(text,q){
   if(!q)return false;q=q.trim();if(!q)return false;
   if(text.indexOf(q)>=0||q.indexOf(text)>=0)return true;
@@ -755,18 +777,22 @@ function matchManual(text,q){
   return hit/toks.length>=0.6;
 }
 function demoBrain(text){
-  // 1) 가이드 매뉴얼(직접 등록한 답변) 우선
+  // 1) 등록된 예상질문/답변 우선
   for(var ci=0;ci<CATEGORIES.length;ci++){var c=CATEGORIES[ci];var ms=(DB.data.guide[c]&&DB.data.guide[c].manuals)||[];
     for(var mi=0;mi<ms.length;mi++){if(ms[mi].q&&ms[mi].a&&matchManual(text,ms[mi].q))return {category:c,reply:ms[mi].a,escalate:false};}}
-  // 2) 카테고리 기본 가이드
-  var cat=classify(text);var gd=DB.data.guide[cat]||{};
-  var reply=((gd.text||'')+'').trim()||'문의 주셔서 고마워요! 조금만 더 자세히 알려주시면 정확히 안내할게요 🏮';
+  // 2) 분류 실패 = 모름 → 즉시 모른다고 답하고 담당자 연결
+  var idx=classifyIdx(text);
+  if(idx<0) return {category:catByIdx(-1),reply:'그건 제가 정확히 모르겠어요. 담당자에게 연결해 드릴게요.',escalate:true};
+  // 3) 카테고리 기본 가이드(짧게)
+  var cat=catByIdx(idx),gd=DB.data.guide[cat]||{};
+  var txt=((gd.text||'')+'').trim();
+  if(!txt) return {category:cat,reply:'그건 제가 정확히 모르겠어요. 담당자에게 연결해 드릴게요.',escalate:true};
   var escalate=/예외|초과|승인|협의|반려|거절|민감|급여|특수/.test(text);
-  return {category:cat,reply:reply,escalate:escalate};}
+  return {category:cat,reply:txt,escalate:escalate};}
 async function callAI(text){
   history.push({role:'user',content:text});
   var res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,system:buildSystem(),messages:history})});
+    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:400,system:buildSystem(),messages:history})});
   if(!res.ok) throw new Error("api "+res.status);
   var data=await res.json();
   var raw=(data.content||[]).map(function(b){return b.type==='text'?b.text:'';}).join('').trim();
@@ -786,7 +812,7 @@ var QUICK=['연차 신청 어떻게 해요?','회의실 예약하고 싶어요',
 var chipsBox=document.getElementById('chips');
 QUICK.forEach(function(q){var c=document.createElement('button');c.className='chip';c.textContent=q;c.onclick=function(){sendMsg(q);};chipsBox.appendChild(c);});
 function initChat(){history=[];lastUserMsg='';busy=false;document.getElementById('stream').innerHTML='';
-  addBot({category:null,reply:'반가워요, 호야입니다 🏮\n자산·비품·시설·복리후생·근태 등 헬프데스크 문의를 편하게 물어보세요. 아래 추천 질문을 눌러도 좋아요. 어려운 건 담당자에게 뚝딱 연결해 드릴게요!',escalate:false});}
+  addBot({category:null,reply:'반가워요, 호야입니다 🏮\n자산, 비품, 시설, 복리후생, 근태 등 헬프데스크 문의를 편하게 물어보세요. 아래 추천 질문을 눌러도 좋아요. 어려운 건 담당자에게 뚝딱 연결해 드릴게요!',escalate:false});}
 initChat();
 
 /* ============ ADMIN ============ */
@@ -794,7 +820,7 @@ function adminTab(t){
   document.querySelectorAll('.atab').forEach(function(x){x.classList.remove('show');});
   document.getElementById('atab-'+t).classList.add('show');
   document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.atab===t);});
-  if(t==='kb'){renderCaptured();renderKBTabs();renderKBCat();}
+  if(t==='kb'){renderCatMgr();renderCaptured();renderKBTabs();renderKBCat();}
   if(t==='rr'){renderRR();}
   if(t==='set'){renderSettings();}
 }
@@ -829,7 +855,7 @@ function curate(id){
   box.appendChild(tmp.firstChild);
   document.querySelector('#atab-kb .kb-section:last-child').scrollIntoView({behavior:'smooth',block:'start'});
   var ta=box.lastChild.querySelector('.m-a');if(ta)ta.focus();
-  toast('['+e.cat+'] 예상질문·답변에 추가했어요. 답변을 다듬고 [지식 저장]을 눌러주세요 🏮');
+  toast('['+e.cat+'] 예상질문/답변에 추가했어요. 답변을 다듬고 [지식 저장]을 눌러주세요 🏮');
 }
 function removeAsked(id){
   DB.data.asked=DB.data.asked.filter(function(x){return x.id!==id;});DB.saveAsked();renderCaptured();
@@ -845,10 +871,10 @@ function renderAdmin(){
     stat('전체 접수',inq.length)+stat('문의 폼',form)+stat('슬랙 연결',slack)+stat('미처리',open);
   var tl=document.getElementById('ticketList');
   document.getElementById('inqCount').textContent='총 '+inq.length+'건';
-  if(!inq.length){tl.innerHTML='<div class="empty">아직 접수된 문의가 없어요.<br>문의 폼·담당자 연결·채팅으로 문의가 들어오면 여기에 실시간으로 표시돼요.</div>';}
+  if(!inq.length){tl.innerHTML='<div class="empty">아직 접수된 문의가 없어요.<br>문의 폼, 담당자 연결, 채팅으로 문의가 들어오면 여기에 실시간으로 표시돼요.</div>';}
   else tl.innerHTML=inq.map(function(t){var s=ST[t.status]||ST.wait;
     return '<div class="ticket"><div class="id">'+t.id+'</div>'
-      +'<div class="body"><b>'+esc(t.title)+'</b><span>'+esc(t.dept)+' · '+esc(t.name)+' · 🏷️ '+t.category+'</span></div>'
+      +'<div class="body"><b>'+esc(t.title)+'</b><span>'+esc(t.dept)+', '+esc(t.name)+', 🏷️ '+t.category+'</span></div>'
       +'<div class="badge '+(CH[t.channel]||'ch-form')+'">'+t.channel+'</div>'
       +'<div class="badge '+s[1]+'">'+s[0]+'</div></div>';}).join('');
   // category distribution
@@ -875,7 +901,7 @@ function renderKBCat(){
   document.getElementById('kbEditor').innerHTML=
     '<div class="guide-item" data-cat="'+c+'"><div class="gh"><span>'+CAT_EMOJI[c]+'</span><b>'+c+'</b><span class="pill">호야 기본 안내</span></div>'
     +'<textarea class="g-text" placeholder="이 카테고리의 기본 안내 문구를 적어주세요.">'+esc(gd.text||'')+'</textarea>'
-    +'<div class="m-label">예상질문 · 답변 <small>(질문이 비슷하면 호야가 이 답변을 그대로 사용해요 · 무제한 추가 가능)</small></div>'
+    +'<div class="m-label">예상질문/답변 <small>(질문이 비슷하면 호야가 이 답변을 그대로 사용해요, 무제한 추가 가능)</small></div>'
     +'<div class="manuals">'+rows+'</div>'
     +'<button class="add-manual" onclick="addManual(this)">+ 예상질문 추가</button></div>';
 }
@@ -934,6 +960,41 @@ function saveSettings(){
   DB.data.settings={email:val('set_email')||HANDOFF_EMAIL,web3:val('set_w3f'),slack:val('set_slack'),pin:val('set_pin')||ADMIN_PIN,authUrl:val('set_authurl')};
   DB.saveSettings();toast('설정을 저장했어요 🏮');
 }
+
+/* ----- 카테고리 관리 ----- */
+function updateHeroCats(){var el=document.getElementById('heroCats');if(el)el.textContent=CATEGORIES.join(' | ');}
+function catRowHtml(name,emoji){
+  return '<div class="cat-row"><input class="cat-emoji" maxlength="3" value="'+esc(emoji||'')+'"/>'
+    +'<input class="cat-name" value="'+esc(name||'')+'" data-old="'+esc(name||'')+'" placeholder="카테고리명"/>'
+    +'<button class="m-del" title="삭제" onclick="this.parentNode.remove()">✕</button></div>';
+}
+function renderCatMgr(){
+  document.getElementById('catList').innerHTML=DB.data.cats.map(function(c){return catRowHtml(c.name,c.emoji);}).join('');
+}
+function catAdd(){var box=document.getElementById('catList');var tmp=document.createElement('div');tmp.innerHTML=catRowHtml('','🏷️');box.appendChild(tmp.firstChild);box.lastChild.querySelector('.cat-name').focus();}
+function saveCats(){
+  var newCats=[],guideNew={},map={},seen={};
+  document.querySelectorAll('#catList .cat-row').forEach(function(row){
+    var name=row.querySelector('.cat-name').value.trim();
+    var emoji=row.querySelector('.cat-emoji').value.trim()||'🏷️';
+    var old=row.querySelector('.cat-name').getAttribute('data-old')||'';
+    if(!name||seen[name])return;seen[name]=1;
+    newCats.push({name:name,emoji:emoji});
+    if(old&&DB.data.guide[old])guideNew[name]=DB.data.guide[old];
+    else guideNew[name]=DB.data.guide[name]||{text:'',manuals:[]};
+    if(old)map[old]=name;
+  });
+  if(!newCats.length){toast('카테고리는 최소 1개 필요해요');return;}
+  var names=newCats.map(function(c){return c.name;});
+  // 수집 질문의 카테고리 이동/정리
+  DB.data.asked.forEach(function(q){if(map[q.cat])q.cat=map[q.cat];if(names.indexOf(q.cat)<0)q.cat=names[names.length-1];});
+  DB.data.cats=newCats;DB.data.guide=guideNew;rebuildCats();
+  if(CATEGORIES.indexOf(currentKBCat)<0)currentKBCat=CATEGORIES[0];
+  DB.saveCats();DB.saveGuide();DB.saveAsked();
+  renderCatMgr();renderKBTabs();renderKBCat();renderCaptured();updateHeroCats();
+  toast('카테고리를 저장했어요. 사이트 전체에 반영됐어요 🏮');
+}
+updateHeroCats();
 
 /* 진입: #admin 주소면 어드민 콘솔로 */
 /* 숨겨진 어드민 접근: 일반 메뉴엔 노출하지 않고 ① 주소 끝 #admin ② 푸터 5번 클릭 ③ Ctrl/⌘+Shift+A */
